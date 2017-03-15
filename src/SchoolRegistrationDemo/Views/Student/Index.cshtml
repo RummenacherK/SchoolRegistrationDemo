@@ -1,0 +1,73 @@
+﻿@model IEnumerable<SchoolRegistrationDemo.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+    SelectList crslist = ViewBag.CourseSelectList;
+}
+
+<h2>Students</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Add New", "Create", "Student", null, new { @class = "btn btn-primary" })
+        </th>
+        <th>
+            <form method="post" id="filter" action="@Url.Action("Index", "Student")">
+                @Html.DropDownList("courseFilter", crslist, "All", new { @class = "form-control", @style = "width: 16rem; display:inline-block" })
+            </form>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnrollmentDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseId)
+        </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnrollmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.Label)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section scripts
+{
+    <script>
+$(document).ready(function(){
+    $("#courseFilter").change(function () {
+        $("#filter").submit();
+    });
+});
+    </script>
+}
