@@ -44,6 +44,23 @@ namespace SchoolRegistrationDemo.Controllers
             return RedirectToAction("Index", "Course");
         }
 
+        // GET  Course Details
+        public ActionResult Details(int? Id)
+        {
+            if (Id == null)
+            {
+                return View("Index");
+            }
+
+            var course = db_context.Course.SingleOrDefault(c => c.Id == Id);
+
+            if (course == null)
+            {
+                return View("Index");
+            }
+            return View("Details", course);
+        }
+
         // Edit Courses
 
         public ActionResult Edit(int? Id)
